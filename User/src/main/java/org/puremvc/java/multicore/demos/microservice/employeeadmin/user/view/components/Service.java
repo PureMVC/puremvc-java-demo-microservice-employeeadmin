@@ -13,6 +13,7 @@ import org.bson.Document;
 import org.bson.json.JsonMode;
 import org.bson.json.JsonWriterSettings;
 import org.puremvc.java.multicore.demos.microservice.employeeadmin.user.ApplicationFacade;
+import org.puremvc.java.multicore.demos.microservice.employeeadmin.user.view.interfaces.IService;
 
 import javax.json.Json;
 import javax.json.stream.JsonGenerator;
@@ -118,9 +119,5 @@ public class Service extends HttpServlet {
     }
 
     private IService delegate;
-
-    public interface IService {
-        void service(HttpServletRequest request, HttpServletResponse response);
-    }
 
 }

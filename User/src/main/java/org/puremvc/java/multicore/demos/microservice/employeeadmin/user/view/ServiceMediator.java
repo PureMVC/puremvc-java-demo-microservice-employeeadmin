@@ -12,13 +12,14 @@ import org.puremvc.java.interfaces.INotification;
 import org.puremvc.java.multicore.demos.microservice.employeeadmin.user.ApplicationFacade;
 import org.puremvc.java.multicore.demos.microservice.employeeadmin.user.model.request.ServiceRequest;
 import org.puremvc.java.multicore.demos.microservice.employeeadmin.user.view.components.Service;
+import org.puremvc.java.multicore.demos.microservice.employeeadmin.user.view.interfaces.IService;
 import org.puremvc.java.patterns.mediator.Mediator;
 
 import javax.servlet.Servlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ServiceMediator extends Mediator implements Service.IService {
+public class ServiceMediator extends Mediator implements IService {
 
     public static String NAME = "ServiceMediator";
 
