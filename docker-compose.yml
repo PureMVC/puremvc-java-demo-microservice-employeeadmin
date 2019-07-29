@@ -1,0 +1,88 @@
+version: "3"
+
+services:
+  user:
+    image: jboss/wildfly
+    container_name: "user"
+    restart: always
+    ports:
+      - 9080:8080
+      - 65194:65193
+    volumes:
+      - ./User/target/User.war:/opt/jboss/wildfly/standalone/deployments/User.war
+    environment:
+      - JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,address=0.0.0.0:65193,suspend=n,server=y -Djava.net.preferIPv4Stack=true
+      - MONGO_HOST=mongo
+      - MONGO_PORT=27017
+      - MONGO_USERNAME=root
+      - MONGO_PASSWORD=puremvc
+      - MONGO_DATABASE=employeeadmin
+      - MONGO_AUTHDB=admin
+    command: >
+      bash -c "/opt/jboss/wildfly/bin/add-user.sh admin Admin#007 --silent && /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0"
+    links:
+      - mongo
+    depends_on:
+      - mongo
+
+  role:
+    image: jboss/wildfly
+    container_name: "role"
+    restart: always
+    ports:
+      - 9081:8080
+      - 65195:65193
+    volumes:
+      - ./Role/target/Role.war:/opt/jboss/wildfly/standalone/deployments/Role.war
+    environment:
+      - JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,address=0.0.0.0:65193,suspend=n,server=y -Djava.net.preferIPv4Stack=true
+      - MONGO_HOST=mongo
+      - MONGO_PORT=27017
+      - MONGO_USERNAME=root
+      - MONGO_PASSWORD=puremvc
+      - MONGO_DATABASE=employeeadmin
+      - MONGO_AUTHDB=admin
+    command: >
+      bash -c "/opt/jboss/wildfly/bin/add-user.sh admin Admin#007 --silent && /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0"
+    links:
+      - mongo
+    depends_on:
+      - mongo
+
+  department:
+    image: jboss/wildfly
+    container_name: "department"
+    restart: always
+    ports:
+      - 9082:8080
+      - 65196:65193
+    volumes:
+      - ./Department/target/Department.war:/opt/jboss/wildfly/standalone/deployments/Department.war
+    environment:
+      - JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,address=0.0.0.0:65193,suspend=n,server=y -Djava.net.preferIPv4Stack=true
+      - MONGO_HOST=mongo
+      - MONGO_PORT=27017
+      - MONGO_USERNAME=root
+      - MONGO_PASSWORD=puremvc
+      - MONGO_DATABASE=employeeadmin
+      - MONGO_AUTHDB=admin
+    command: >
+      bash -c "/opt/jboss/wildfly/bin/add-user.sh admin Admin#007 --silent && /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0"
+    links:
+      - mongo
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:4.0.10
+    container_name: mongo
+    restart: always
+    volumes:
+       - ./assets:/docker-entrypoint-initdb.d/
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=puremvc
+    ports:
+      - 27017:27017
+      - 27018:27018
+      - 27019:27019
