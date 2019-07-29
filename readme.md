@@ -7,6 +7,9 @@ This demo illustrates techniques for performing routine server-side maintenance 
 ## Status
 Development - [Version 0.1]()
 
+## Installation
+`docker-compose up`
+
 ## Platforms / Technologies
 * [Java](https://en.wikipedia.org/wiki/Java_(programming_language))
 * [Docker](https://en.wikipedia.org/wiki/Docker_(software))
