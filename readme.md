@@ -5,15 +5,24 @@ This demo illustrates techniques for performing routine server-side maintenance 
 ![PureMVC Java Demo: Employee Admin Microservice](https://raw.githubusercontent.com/PureMVC/puremvc-java-demo-microservice-employeeadmin/master/assets/screenshot.png)
 
 ## Status
-Development - [Version 0.1]()
+Production - [Version 1.0]()
 
 ## Installation
-`docker-compose up`
+
+```
+mvn install
+docker-compose up
+```
 
 ## Platforms / Technologies
 * [Java](https://en.wikipedia.org/wiki/Java_(programming_language))
+* [gRPC](https://en.wikipedia.org/wiki/GRPC)
 * [Docker](https://en.wikipedia.org/wiki/Docker_(software))
 * [Mongodb](https://en.wikipedia.org/wiki/MongoDB)
+
+## Screenshot
+<!---![PureMVC Java Demo: Employee Admin Microservice](http://puremvc.org/pages/images/screenshots/PureMVC-Shot-Java-EmployeeAdmin.jpg) -->
+![PureMVC Java Demo: Employee Admin Microservice](https://raw.githubusercontent.com/PureMVC/puremvc.github.com/master/pages/images/screenshots/PureMVC-Shot-Java-EmployeeAdmin.jpg)
 
 ## License
 * PureMVC Java Demo - Microservice Employee Admin - Copyright © 2019 [Saad Shams](https://www.linkedin.com/in/muizz)

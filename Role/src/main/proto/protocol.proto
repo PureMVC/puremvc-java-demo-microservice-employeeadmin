@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+option java_package = "org.puremvc.java.multicore.demos.microservice.employeeadmin.role";
+option java_multiple_files = true;
+
+import "google/protobuf/empty.proto";
+
+service RoleService {
+    rpc findAll(google.protobuf.Empty) returns (RoleList);
+    rpc findById(Role) returns (Role);
+    rpc save(Role) returns (Role);
+    rpc updateById(Role) returns (Role);
+    rpc deleteById(Role) returns (google.protobuf.Empty);
+}
+
+service EmployeeRoleService {
+    rpc findById (EmployeeRole) returns (EmployeeRole);
+    rpc save(EmployeeRole) returns (EmployeeRole);
+    rpc updateById (EmployeeRole) returns (EmployeeRole);
+    rpc deleteById (EmployeeRole) returns (google.protobuf.Empty);
+}
+
+message Role {
+    string id = 1;
+    string name = 2;
+}
+
+message RoleList {
+    repeated Role role = 1;
+}
+
+message EmployeeRole {
+    string id = 1;
+    RoleList roleList = 2;
+}

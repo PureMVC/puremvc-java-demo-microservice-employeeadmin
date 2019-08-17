@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>Department</artifactId>
+    <artifactId>Employee</artifactId>
 
     <build>
         <plugins>
@@ -23,7 +23,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>org.puremvc.java.multicore.demos.microservice.employeeadmin.department.Service</mainClass>
+                            <mainClass>org.puremvc.java.multicore.demos.microservice.employeeadmin.employee.Service</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

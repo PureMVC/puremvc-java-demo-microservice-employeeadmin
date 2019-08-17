@@ -1,84 +1,62 @@
 version: "3"
 
 services:
-  user:
+
+  service:
     image: jboss/wildfly
-    container_name: "user"
-    restart: always
+    container_name: "service"
+    restart: on-failure
     ports:
       - 9080:8080
-      - 65194:65193
+      - 9990:9990
+      - 65193:65193
     volumes:
-      - ./User/target/User.war:/opt/jboss/wildfly/standalone/deployments/User.war
+      - ./Service/target/Service.war:/opt/jboss/wildfly/standalone/deployments/Service.war
     environment:
       - JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,address=0.0.0.0:65193,suspend=n,server=y -Djava.net.preferIPv4Stack=true
-      - MONGO_HOST=mongo
-      - MONGO_PORT=27017
-      - MONGO_USERNAME=root
-      - MONGO_PASSWORD=puremvc
-      - MONGO_DATABASE=employeeadmin
-      - MONGO_AUTHDB=admin
+      - EMPLOYEE_HOST=employee:9081
+      - ROLE_HOST=role:9082
+      - DEPARTMENT_HOST=department:9083
     command: >
       bash -c "/opt/jboss/wildfly/bin/add-user.sh admin Admin#007 --silent && /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0"
     links:
-      - mongo
+      - employee
+      - role
+      - department
     depends_on:
-      - mongo
+      - employee
+      - role
+      - department
 
-  role:
-    image: jboss/wildfly
-    container_name: "role"
-    restart: always
+  employee:
+    image: openjdk:jdk-alpine
+    container_name: "employee"
+    restart: on-failure
     ports:
       - 9081:8080
-      - 65195:65193
+      - 9991:9990
+      - 65194:65193
     volumes:
-      - ./Role/target/Role.war:/opt/jboss/wildfly/standalone/deployments/Role.war
+      - ./Employee/target/Employee-1.0-SNAPSHOT-jar-with-dependencies.jar:/deployments/Employee-1.0-SNAPSHOT-jar-with-dependencies.jar
     environment:
       - JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,address=0.0.0.0:65193,suspend=n,server=y -Djava.net.preferIPv4Stack=true
-      - MONGO_HOST=mongo
+      - GRPC_PORT=8000
+      - MONGO_HOST=employee-database
       - MONGO_PORT=27017
       - MONGO_USERNAME=root
       - MONGO_PASSWORD=puremvc
       - MONGO_DATABASE=employeeadmin
       - MONGO_AUTHDB=admin
-    command: >
-      bash -c "/opt/jboss/wildfly/bin/add-user.sh admin Admin#007 --silent && /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0"
+    command: java -jar /deployments/Employee-1.0-SNAPSHOT-jar-with-dependencies.jar
     links:
-      - mongo
+      - employee-database
     depends_on:
-      - mongo
+      - employee-database
 
-  department:
-    image: jboss/wildfly
-    container_name: "department"
-    restart: always
-    ports:
-      - 9082:8080
-      - 65196:65193
-    volumes:
-      - ./Department/target/Department.war:/opt/jboss/wildfly/standalone/deployments/Department.war
-    environment:
-      - JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,address=0.0.0.0:65193,suspend=n,server=y -Djava.net.preferIPv4Stack=true
-      - MONGO_HOST=mongo
-      - MONGO_PORT=27017
-      - MONGO_USERNAME=root
-      - MONGO_PASSWORD=puremvc
-      - MONGO_DATABASE=employeeadmin
-      - MONGO_AUTHDB=admin
-    command: >
-      bash -c "/opt/jboss/wildfly/bin/add-user.sh admin Admin#007 --silent && /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0"
-    links:
-      - mongo
-    depends_on:
-      - mongo
-
-  mongo:
+  employee-database:
     image: mongo:4.0.10
-    container_name: mongo
-    restart: always
-    volumes:
-       - ./assets:/docker-entrypoint-initdb.d/
+    container_name: employee-database
+    restart: on-failure
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=puremvc
@@ -86,3 +64,81 @@ services:
       - 27017:27017
       - 27018:27018
       - 27019:27019
+
+  role:
+    image: openjdk:jdk-alpine
+    container_name: "role"
+    restart: on-failure
+    ports:
+      - 9082:8080
+      - 9992:9990
+      - 65195:65193
+    volumes:
+      - ./Role/target/Role-1.0-SNAPSHOT-jar-with-dependencies.jar:/deployments/Role-1.0-SNAPSHOT-jar-with-dependencies.jar
+    environment:
+      - JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,address=0.0.0.0:65193,suspend=n,server=y -Djava.net.preferIPv4Stack=true
+      - GRPC_PORT=8080
+      - MONGO_HOST=role-database
+      - MONGO_PORT=37017
+      - MONGO_USERNAME=root
+      - MONGO_PASSWORD=puremvc
+      - MONGO_DATABASE=employeeadmin
+      - MONGO_AUTHDB=admin
+    command: java -jar /deployments/Role-1.0-SNAPSHOT-jar-with-dependencies.jar
+    links:
+      - role-database
+    depends_on:
+      - role-database
+
+  role-database:
+    image: mongo:4.0.10
+    container_name: role-database
+    restart: on-failure
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=puremvc
+    ports:
+      - 37017:27017
+      - 37018:27018
+      - 37019:27019
+
+  department:
+    image: openjdk:jdk-alpine
+    container_name: "department"
+    restart: on-failure
+    ports:
+      - 9083:8080
+      - 9993:9990
+      - 65196:65193
+    volumes:
+      - ./Department/target/Department-1.0-SNAPSHOT-jar-with-dependencies.jar:/deployments/Department-1.0-SNAPSHOT-jar-with-dependencies.jar
+    environment:
+      - JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,address=0.0.0.0:65193,suspend=n,server=y -Djava.net.preferIPv4Stack=true
+      - GRPC_PORT=8080
+      - MONGO_HOST=department-database
+      - MONGO_PORT=47017
+      - MONGO_USERNAME=root
+      - MONGO_PASSWORD=puremvc
+      - MONGO_DATABASE=employeeadmin
+      - MONGO_AUTHDB=admin
+    command: java -jar /deployments/Department-1.0-SNAPSHOT-jar-with-dependencies.jar
+    links:
+      - department-database
+    depends_on:
+      - department-database
+
+  department-database:
+    image: mongo:4.0.10
+    container_name: department-database
+    restart: on-failure
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=puremvc
+    ports:
+      - 47017:27017
+      - 47018:27018
+      - 47019:27019
+
+#networks:
+#  dockernet:
+#    external: true

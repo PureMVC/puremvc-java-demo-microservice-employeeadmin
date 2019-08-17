@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option java_package = "org.puremvc.java.multicore.demos.microservice.employeeadmin.employee";
+option java_multiple_files = true;
+
+import "google/protobuf/empty.proto";
+
+service EmployeeService {
+    rpc findAll(google.protobuf.Empty) returns (EmployeeList);
+    rpc findById(Employee) returns (Employee);
+    rpc save(Employee) returns (Employee);
+    rpc updateById(Employee) returns (Employee);
+    rpc deleteById(Employee) returns (google.protobuf.Empty);
+}
+
+message Employee {
+    string id = 1;
+    string username = 2;
+    string first = 3;
+    string last = 4;
+    string email = 5;
+}
+
+message EmployeeList {
+    repeated Employee employee = 1;
+}

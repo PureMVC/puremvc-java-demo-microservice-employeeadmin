@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+option java_package = "org.puremvc.java.multicore.demos.microservice.employeeadmin.department";
+option java_multiple_files = true;
+
+import "google/protobuf/empty.proto";
+
+service DepartmentService {
+    rpc findAll(google.protobuf.Empty) returns (DepartmentList);
+    rpc findById(Department) returns (Department);
+    rpc save(Department) returns (Department);
+    rpc updateById(Department) returns (Department);
+    rpc deleteById(Department) returns (google.protobuf.Empty);
+}
+
+service EmployeeDepartmentService {
+    rpc findById (EmployeeDepartment) returns (EmployeeDepartment);
+    rpc save (EmployeeDepartment) returns (EmployeeDepartment);
+    rpc updateById (EmployeeDepartment) returns (EmployeeDepartment);
+    rpc deleteById (EmployeeDepartment) returns (google.protobuf.Empty);
+}
+
+message Department {
+    string id = 1;
+    string name = 2;
+}
+
+message DepartmentList {
+    repeated Department department = 1;
+}
+
+message EmployeeDepartment {
+    string id = 1;
+    Department department = 2;
+}
