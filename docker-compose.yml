@@ -138,7 +138,3 @@ services:
       - 47017:27017
       - 47018:27018
       - 47019:27019
-
-#networks:
-#  dockernet:
-#    external: true
