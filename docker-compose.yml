@@ -29,7 +29,6 @@ services:
     restart: on-failure
     ports:
       - 9081:8080
-      - 9991:9990
       - 65194:65193
     volumes:
       - ./Employee/target/Employee-1.0-SNAPSHOT-jar-with-dependencies.jar:/deployments/Employee-1.0-SNAPSHOT-jar-with-dependencies.jar
@@ -64,7 +63,6 @@ services:
     restart: on-failure
     ports:
       - 9082:8080
-      - 9992:9990
       - 65195:65193
     volumes:
       - ./Role/target/Role-1.0-SNAPSHOT-jar-with-dependencies.jar:/deployments/Role-1.0-SNAPSHOT-jar-with-dependencies.jar
@@ -99,7 +97,6 @@ services:
     restart: on-failure
     ports:
       - 9083:8080
-      - 9993:9990
       - 65196:65193
     volumes:
       - ./Department/target/Department-1.0-SNAPSHOT-jar-with-dependencies.jar:/deployments/Department-1.0-SNAPSHOT-jar-with-dependencies.jar
