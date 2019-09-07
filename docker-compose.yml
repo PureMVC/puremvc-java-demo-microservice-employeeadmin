@@ -14,15 +14,10 @@ services:
       - ./Service/target/Service.war:/opt/jboss/wildfly/standalone/deployments/Service.war
     environment:
       - JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,address=0.0.0.0:65193,suspend=n,server=y -Djava.net.preferIPv4Stack=true
-      - EMPLOYEE_HOST=employee:9081
-      - ROLE_HOST=role:9082
-      - DEPARTMENT_HOST=department:9083
-    command: >
-      bash -c "/opt/jboss/wildfly/bin/add-user.sh admin Admin#007 --silent && /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0"
-    links:
-      - employee
-      - role
-      - department
+      - EMPLOYEE_HOST=employee:8080
+      - ROLE_HOST=role:8080
+      - DEPARTMENT_HOST=department:8080
+    command: bash -c "/opt/jboss/wildfly/bin/add-user.sh admin Admin#007 --silent && /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0"
     depends_on:
       - employee
       - role
@@ -40,7 +35,7 @@ services:
       - ./Employee/target/Employee-1.0-SNAPSHOT-jar-with-dependencies.jar:/deployments/Employee-1.0-SNAPSHOT-jar-with-dependencies.jar
     environment:
       - JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,address=0.0.0.0:65193,suspend=n,server=y -Djava.net.preferIPv4Stack=true
-      - GRPC_PORT=8000
+      - GRPC_PORT=8080
       - MONGO_HOST=employee-database
       - MONGO_PORT=27017
       - MONGO_USERNAME=root
@@ -48,8 +43,6 @@ services:
       - MONGO_DATABASE=employeeadmin
       - MONGO_AUTHDB=admin
     command: java -jar /deployments/Employee-1.0-SNAPSHOT-jar-with-dependencies.jar
-    links:
-      - employee-database
     depends_on:
       - employee-database
 
@@ -79,14 +72,12 @@ services:
       - JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,address=0.0.0.0:65193,suspend=n,server=y -Djava.net.preferIPv4Stack=true
       - GRPC_PORT=8080
       - MONGO_HOST=role-database
-      - MONGO_PORT=37017
+      - MONGO_PORT=27017
       - MONGO_USERNAME=root
       - MONGO_PASSWORD=puremvc
       - MONGO_DATABASE=employeeadmin
       - MONGO_AUTHDB=admin
     command: java -jar /deployments/Role-1.0-SNAPSHOT-jar-with-dependencies.jar
-    links:
-      - role-database
     depends_on:
       - role-database
 
@@ -116,14 +107,12 @@ services:
       - JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,address=0.0.0.0:65193,suspend=n,server=y -Djava.net.preferIPv4Stack=true
       - GRPC_PORT=8080
       - MONGO_HOST=department-database
-      - MONGO_PORT=47017
+      - MONGO_PORT=27017
       - MONGO_USERNAME=root
       - MONGO_PASSWORD=puremvc
       - MONGO_DATABASE=employeeadmin
       - MONGO_AUTHDB=admin
     command: java -jar /deployments/Department-1.0-SNAPSHOT-jar-with-dependencies.jar
-    links:
-      - department-database
     depends_on:
       - department-database
 

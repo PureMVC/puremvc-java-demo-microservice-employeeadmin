@@ -60,7 +60,7 @@ public class ServiceCommand extends SimpleCommand {
                     break;
 
                 default:
-                    Matcher matcher = Pattern.compile("/employees/(.*)/roles").matcher(request.getPathInfo()); // users/:id/roles
+                    Matcher matcher = Pattern.compile("/employees/(.*)/roles").matcher(request.getPathInfo()); // employees/:id/roles
                     if (matcher.find()) {
                         if (request.getMethod().equals("GET")) {
                             Object result = serviceProxy.findEmployeeRoleById(matcher.group(1));
@@ -75,7 +75,7 @@ public class ServiceCommand extends SimpleCommand {
                         return;
                     }
 
-                    matcher = Pattern.compile("/employees/(.*)").matcher(request.getPathInfo()); // users/:id
+                    matcher = Pattern.compile("/employees/(.*)").matcher(request.getPathInfo()); // employees/:id
                     if (matcher.find()) {
                         if (request.getMethod().equals("GET")) {
                             Object result = serviceProxy.findEmployeeById(matcher.group(1));

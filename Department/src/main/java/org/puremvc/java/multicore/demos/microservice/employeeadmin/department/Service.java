@@ -53,10 +53,10 @@ public class Service extends DepartmentServiceGrpc.DepartmentServiceImplBase {
                                 .applyToClusterSettings(builder -> builder.hosts(Arrays.asList(new ServerAddress(env.get("MONGO_HOST"), Integer.parseInt(env.get("MONGO_PORT"))))))
                                 .credential(credential)
                                 .build());
-                //if(mongoClient.getDatabase(env.get("MONGO_DATABASE")).getCollection("department").find().iterator() != null) {
+                if(mongoClient.getDatabase(env.get("MONGO_DATABASE")).getCollection("department").find().iterator() != null) {
                     database = mongoClient.getDatabase(env.get("MONGO_DATABASE"));
                     break;
-                //}
+                }
             } catch (Exception e) {
                 System.err.println("Failed to create.");
             }

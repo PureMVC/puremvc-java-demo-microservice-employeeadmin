@@ -32,7 +32,7 @@ import java.util.regex.Pattern;
 public class Service extends HttpServlet {
 
     public Service() {
-        ApplicationFacade.getInstance().startup(this); // puremvc
+        ApplicationFacade.getInstance().startup(this);
     }
 
     protected void service(HttpServletRequest request, HttpServletResponse response) {
