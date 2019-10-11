@@ -75,13 +75,13 @@ public class ServiceCommand extends SimpleCommand {
                         return;
                     }
 
-                    matcher = Pattern.compile("/employees/(.*)").matcher(request.getPathInfo()); // employees/:id
+                    matcher = Pattern.compile("/employees/((.*))").matcher(request.getPathInfo()); // employees/guid
                     if (matcher.find()) {
                         if (request.getMethod().equals("GET")) {
                             Object result = serviceProxy.findEmployeeById(matcher.group(1));
                             serviceRequest.setResultData(200, result);
                         } else if(request.getMethod().equals("PUT")) {
-                            Object result = serviceProxy.updateEmployeeById(serviceRequest.getJsonObject());
+                            Object result = serviceProxy.updateEmployeeById(matcher.group(1), serviceRequest.getJsonObject());
                             serviceRequest.setResultData(200, result);
                         } else if (request.getMethod().equals("DELETE")) {
                             serviceProxy.deleteEmployeeById(matcher.group(1));

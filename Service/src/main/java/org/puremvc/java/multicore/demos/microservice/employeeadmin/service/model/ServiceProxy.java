@@ -56,10 +56,10 @@ public class ServiceProxy extends Proxy {
                 .setEmail(body.getString("email")).build());
     }
 
-    public Employee updateEmployeeById(JsonObject body) {
+    public Employee updateEmployeeById(String id, JsonObject body) {
         return employee.updateById(Employee.newBuilder().setUsername(body.getString("username"))
                 .setFirst(body.getString("first")).setLast(body.getString("last"))
-                .setEmail(body.getString("email")).build());
+                .setEmail(body.getString("email")).setId(id).build());
     }
 
     public void deleteEmployeeById(String id) {
