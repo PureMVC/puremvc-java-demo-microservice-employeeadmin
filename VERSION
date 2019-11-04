@@ -1,0 +1,10 @@
+PureMVC Java Demo - Employee Admin Microservice
+--------------------------------------------------------------------------
+Release Date: 11/04/19
+    Platform: Java, gRPC, MongoDB
+     Version: 1
+       Major: 0
+       Minor: 0
+      Author: Saad Shams <saad.shams@puremvc.org>
+--------------------------------------------------------------------------
+1.0.0 - First public release.

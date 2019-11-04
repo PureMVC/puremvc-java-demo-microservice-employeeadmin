@@ -44,7 +44,6 @@ public class StartupCommand extends SimpleCommand {
         };
 
         env.forEach((k, v) -> {
-            System.out.println(k + ": " + v);
             if(v == null) { throw new RuntimeException("Please set the " + k + " in env variables and try again"); }
         });
 

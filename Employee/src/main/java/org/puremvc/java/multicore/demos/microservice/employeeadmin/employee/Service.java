@@ -31,8 +31,8 @@ public class Service {
             put("GRPC_PORT", System.getenv("GRPC_PORT"));
             put("MONGO_HOST", System.getenv("MONGO_HOST"));
             put("MONGO_PORT", System.getenv("MONGO_PORT"));
-            put("MONGO_USERNAME", System.getenv("MONGO_USERNAME"));
-            put("MONGO_PASSWORD", System.getenv("MONGO_PASSWORD"));
+            put("MONGO_INITDB_ROOT_USERNAME", System.getenv("MONGO_INITDB_ROOT_USERNAME"));
+            put("MONGO_INITDB_ROOT_PASSWORD", System.getenv("MONGO_INITDB_ROOT_PASSWORD"));
             put("MONGO_DATABASE", System.getenv("MONGO_DATABASE"));
             put("MONGO_AUTHDB", System.getenv("MONGO_AUTHDB"));
         }
@@ -40,12 +40,12 @@ public class Service {
 
     static {
         env.forEach((key, value) -> {
-            System.out.println(key + ": " + value);
             if(value == null)
                 throw new RuntimeException("Please set the " + key + " in the environment variables and try again.");
         });
 
-        MongoCredential credential = MongoCredential.createCredential(env.get("MONGO_USERNAME"), env.get("MONGO_AUTHDB"), env.get("MONGO_PASSWORD").toCharArray());
+        System.out.println("Connecting MongoDB.");
+        MongoCredential credential = MongoCredential.createCredential(env.get("MONGO_INITDB_ROOT_USERNAME"), env.get("MONGO_AUTHDB"), env.get("MONGO_INITDB_ROOT_PASSWORD").toCharArray());
         while(true) {
             try {
                 MongoClient mongoClient = MongoClients.create(
@@ -57,14 +57,9 @@ public class Service {
                     database = mongoClient.getDatabase(env.get("MONGO_DATABASE"));
                     break;
                 }
-            } catch (Exception e) {
-                System.err.println("Failed to create.");
-            }
-            try {
-                System.out.println("Sleeping for 3 secs (waiting for mongodb to be loaded) ...");
                 Thread.sleep(3000);
             } catch (Exception e) {
-                System.out.println("Thread sleep Exception: " + e.getMessage());
+                System.out.println(e.getMessage());
             }
         }
     }
