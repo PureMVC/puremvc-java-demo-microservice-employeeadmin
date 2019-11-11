@@ -14,6 +14,7 @@ docker-compose up
 ## Platforms / Technologies
 * [Java](https://en.wikipedia.org/wiki/Java_(programming_language))
 * [gRPC](https://en.wikipedia.org/wiki/GRPC)
+* [Consul](https://en.wikipedia.org/wiki/Consul_(software))
 * [Docker](https://en.wikipedia.org/wiki/Docker_(software))
 * [Mongodb](https://en.wikipedia.org/wiki/MongoDB)
 

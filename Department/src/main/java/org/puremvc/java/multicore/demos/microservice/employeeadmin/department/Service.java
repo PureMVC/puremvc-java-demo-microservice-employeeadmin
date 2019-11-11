@@ -67,7 +67,7 @@ public class Service extends DepartmentServiceGrpc.DepartmentServiceImplBase {
                 database = mongoClient.getDatabase(env.get("MONGO_DATABASE"));
                 break;
             } catch (Exception exception) {
-                System.out.println(exception.getMessage());
+                exception.printStackTrace();
                 try { Thread.sleep(3000); } catch (InterruptedException e) { e.printStackTrace(); }
             }
         }
@@ -99,11 +99,11 @@ public class Service extends DepartmentServiceGrpc.DepartmentServiceImplBase {
                             body.append(line);
                         }
                     }
-                    throw new Exception("Consul: " + body);
+                    throw new Exception("Consul: " + connection.getResponseCode() + " - " + body);
                 }
                 break;
             } catch (Exception exception) {
-                System.out.println(exception.getMessage());
+                exception.printStackTrace();
                 try { Thread.sleep(3000); } catch (InterruptedException e) { e.printStackTrace(); }
             }
         }
@@ -135,4 +135,5 @@ public class Service extends DepartmentServiceGrpc.DepartmentServiceImplBase {
             e.printStackTrace();
         }
     }
+
 }
