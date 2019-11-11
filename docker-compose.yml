@@ -2,6 +2,14 @@ version: "3"
 
 services:
 
+  consul:
+    image: consul:1.6.1
+    container_name: consul
+    ports:
+      - 8300:8300
+      - 8400:8400
+      - 8500:8500
+
   service:
     container_name: "service"
     build:
@@ -30,6 +38,7 @@ services:
       - MONGO_HOST=employee-database
     restart: on-failure
     depends_on:
+      - consul
       - employee-database
 
   employee-database:
@@ -48,6 +57,7 @@ services:
       - MONGO_HOST=role-database
     restart: on-failure
     depends_on:
+      - consul
       - role-database
 
   role-database:
@@ -66,6 +76,7 @@ services:
       - MONGO_HOST=department-database
     restart: on-failure
     depends_on:
+      - consul
       - department-database
 
   department-database:

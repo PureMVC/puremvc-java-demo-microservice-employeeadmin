@@ -2,7 +2,7 @@
 This demo illustrates techniques for performing routine server-side maintenance operations in a PureMVC-based Microservice application.
 
 ## Screenshot
-![PureMVC Java Demo: Employee Admin Microservice](http://puremvc.org/pages/images/screenshots/PureMVC-Shot-Java-EmployeeAdmin.jpg) 
+![PureMVC Java Demo: Employee Admin Microservice](http://puremvc.org/pages/images/screenshots/PureMVC-Shot-Java-EmployeeAdmin-grpc.png) 
 
 ## Installation
 
