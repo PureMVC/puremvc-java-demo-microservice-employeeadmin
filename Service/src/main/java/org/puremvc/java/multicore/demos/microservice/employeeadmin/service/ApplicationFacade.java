@@ -31,7 +31,7 @@ public class ApplicationFacade extends Facade {
     }
 
     public static ApplicationFacade getInstance() {
-        return (ApplicationFacade) Facade.getInstance("Service", () -> new ApplicationFacade("Service"));
+        return (ApplicationFacade) Facade.getInstance("Service", k -> new ApplicationFacade(k));
     }
 
     public void startup(Servlet servlet) {

@@ -19,7 +19,7 @@ docker-compose up
 * [Mongodb](https://en.wikipedia.org/wiki/MongoDB)
 
 ## Status
-Production - [Version 1.1](https://github.com/PureMVC/puremvc-java-demo-microservice-employeeadmin/blob/master/VERSION)
+Production - [Version 1.2](https://github.com/PureMVC/puremvc-java-demo-microservice-employeeadmin/blob/master/VERSION)
 
 ## License
 * PureMVC Java Demo - Microservice Employee Admin - Copyright © 2019 [Saad Shams](https://www.linkedin.com/in/muizz)
